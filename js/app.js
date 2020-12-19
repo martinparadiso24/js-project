@@ -1,8 +1,3 @@
-// Carrito
-
-var cart = [];
-var shoppingCart = document.getElementById('shoppingCart');
-
 // Traigo datos a la variable
 var products = GetProducts();
 
@@ -66,8 +61,7 @@ function createProductCard(product) {
         }
     };
 
-
-
+    // Submit Button
     let submitQ = document.createElement('input');
     submitQ.type = 'submit';
     submitQ.value = 'Agregar al Carrito';
@@ -90,19 +84,20 @@ function createProductCard(product) {
 
 
     // Agregar al carrito desde el Form
-
     let stockcount = product.stock;
 
-    $(submitQ).click( () => {
+    $(submitQ).click(function(){
         if(inputQ.value <= stockcount){
-            console.log(inputQ.value + ' han sido agregados al carrito');
+            agregarAlCarrito(product, inputQ.value);
+            console.log(inputQ.value + ' ' + product.name + ' han sido agregados al carrito');
             stockcount = stockcount - inputQ.value;
             stockDiv.innerHTML = stockcount;
         }
-        else{alert('La cantidad ingresada supera al stock')};
+        else{
+            alert('La cantidad ingresada supera al stock');
+        };
 
         return false;
-
     });
 
 

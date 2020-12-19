@@ -21,6 +21,7 @@ function GetProducts(){
   return productArray;
 }
 
+
 const DATA = `[{
   "id": 1,
   "name": "Bitcoin",

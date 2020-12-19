@@ -14,35 +14,61 @@
 
   <!-- My CSS -->
   <link rel="stylesheet" href="styles/styles.css">
-
-  <title>Tienda Martin</title>
+  
+  <title>CryptoTienda</title>
 
 </head>
 
 <body>
-  <h1 class="has-text-link-dark is-size-2 is-flex is-justify-content-center	pt-3 pb-3">Tienda Martin</h1>
-  <h2>Carrito</h2>
-  <div id="cartContainer">
-    <ul id="shoppingCart">
 
+  <header class="columns">
+    <div class="column">
+      <img class="image is-128x128	
+      " src="https://cdn.iconscout.com/icon/premium/png-256-thumb/cryptocurrency-coins-2-1089052.png" alt="page logo">
+    </div>
+    <h1 class="column has-text-link-dark is-size-2 is-flex is-justify-content-center	pt-3 pb-3">CryptoTienda</h1>
+
+    <div class='column'>
+    <button class="button" id="cartButton">Ver carrito</button>
+    </div>
+
+</header>
+ 
+  <main>
+
+  <div id="cartContainer" class="cartContainer">
+
+    <h2>Carrito</h2>
+
+    <ul id="shoppingCart">
+    
     </ul>
-    <button id="buttonVaciarCarrito" class="">Vaciar carrito</button>
-    <button id="buttonComprar" class="">Comprar</button>
+    
+    <button class='button' id="buttonVaciarCarrito" class="">Vaciar carrito</button>
+    <button class='button' id="buttonComprar" class="">Comprar</button>
+
     <div id="valorTotal" class="">
 
     </div>
+
+  
+    <button class='button' id="hideCartButton">Esconder Carrito</button>
   </div>
 
-  <h2>Productos</h2>
-
-  <main class="container">
+  <div class="container">
     <div id="productsContainer" class="is-flex-wrap-wrap columns is-justify-content-center">
     </div>
-  </main>
+  </div>
+
+</main>
+
+
+
 
  <!-- My Scripts -->
  <script src="js/database.js"></script>
  <script src="js/app.js"></script>
+ <script src="js/cart.js"></script>
 
 </body>
 </html>

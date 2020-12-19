@@ -19,93 +19,93 @@ products.forEach(product => {
 function createProductCard(product) {
     let productCard = document.createElement('div');
     productCard.id = product.id;
-    productCard.classList = "productCard pt-2 pb-2 column is-one-third";
+    productCard.classList = "productCard card p-2 m-3";
 
     // Agrego DIVs hijos de nombre y precio
 
     let img = document.createElement('img');
     img.src = product.img;
+    img.classList = 'card-header card-image is-centered';
     productCard.appendChild(img);
 
     let nameDiv = document.createElement('div');
     nameDiv.innerHTML = product.name;
+    nameDiv.classList = 'is-flex is-justify-content-center subtitle is-3 pt-4';
     productCard.appendChild(nameDiv);
     
     let priceDiv = document.createElement('div');
-    priceDiv.innerHTML = "El precio es $" + product.price;
+    priceDiv.innerHTML = "Precio unitario: $" + product.price;
     productCard.appendChild(priceDiv);
 
     let stockDiv = document.createElement('div');
-    stockDiv.innerHTML = "La cantidad disponible es de: " + product.stock;
+    stockDiv.innerHTML = product.stock;
     productCard.appendChild(stockDiv);
+    
 
-    // agregar al carrito
-    let botonAgregarAlCarrito = document.createElement('button');
-    botonAgregarAlCarrito.classList = 'button is-light agregarCarrito';
-    botonAgregarAlCarrito.innerHTML = "Agregar al Carrito";
-    productCard.appendChild(botonAgregarAlCarrito);
+    let cantidadP = document.createElement('div');
+    cantidadP.innerHTML = 'Unidades disponibles';
+    productCard.appendChild(cantidadP);
+    
 
-    botonAgregarAlCarrito.addEventListener('click', () =>{
-        var cantidadProducto = parseInt(prompt('Que cantidad desea agregar?'));
-        if(cantidadProducto <= product.stock){
-        agregarAlCarrito(product, cantidadProducto);
+    
+
+    // Form Div
+    let quantDiv = document.createElement('div');
+
+    let formQ = document.createElement('form');
+
+    let inputQ = document.createElement('input');
+    inputQ.type = 'number';
+    inputQ.step = '1';
+    inputQ.min = '1';
+    inputQ.max = '1000';
+    inputQ.oninput = function(){
+        if(inputQ.value < 0){
+            alert('el numero no puede ser negativo!');
+            inputQ.value = ''; 
         }
-        else{alert('La cantidad ingresada supera al stock, prueba de nuevo')};
+    };
+
+
+
+    let submitQ = document.createElement('input');
+    submitQ.type = 'submit';
+    submitQ.value = 'Agregar al Carrito';
+    submitQ.classList = 'button';
+
+    let resetQ = document.createElement('input');
+    resetQ.type = 'reset';
+    resetQ.value = 'Borrar';
+    resetQ.classList = 'button';
+
+    quantDiv.style.length = '100px';
+    quantDiv.style.height = '40px';
+
+    formQ.appendChild(inputQ);
+    formQ.appendChild(submitQ);
+    formQ.appendChild(resetQ);
+
+    quantDiv.appendChild(formQ);
+    productCard.appendChild(quantDiv);
+
+
+    // Agregar al carrito desde el Form
+
+    let stockcount = product.stock;
+
+    $(submitQ).click( () => {
+        if(inputQ.value <= stockcount){
+            console.log(inputQ.value + ' han sido agregados al carrito');
+            stockcount = stockcount - inputQ.value;
+            stockDiv.innerHTML = stockcount;
+        }
+        else{alert('La cantidad ingresada supera al stock')};
+
+        return false;
+
     });
+
+
+
     return productCard;
 };
-
-// Funcion agregar al carrito con nuevo JSON
-function agregarAlCarrito(product, cantidadProducto){
-    let productCart = product;
-    productCart.quantity = cantidadProducto;
-    cart.push(productCart);
-    localStorage.setItem('cart', JSON.stringify(cart));
-};
-
-getProductsFromLocalStorage();
-
-// Traer elementos del Local
-function getProductsFromLocalStorage(){
-    let cartFromLocalStorage = localStorage.getItem('cart');
-    var mostrarCart = [];
-    if(cartFromLocalStorage){
-        let cartStringToObject = JSON.parse(cartFromLocalStorage);
-        cartStringToObject.forEach(element => {
-            let productToCart = new Product(element.id, element.name, element.price, element.stock, element.img, element.quantity);
-            mostrarCart.push(productToCart);
-            });
-        addProductToPage(mostrarCart);
-    }
-    else{
-        console.log('No hay carrito');
-    };
-};
-
-// Agregar producto a carrito de pagina
-function addProductToPage(mostrarCart){
-    var valorTotalDeCarrito = 0;
-
-    mostrarCart.forEach(element =>{
-        let crearLi = document.createElement('li');
-        crearLi.innerHTML = element.name + '. cantidad: ' + element.quantity + ', precio unitario: $' + element.price;  
-            shoppingCart.appendChild(crearLi);
-
-        valorTotalDeCarrito = valorTotalDeCarrito + element.price * element.quantity;
-        });
-
-    var valorTotal = document.getElementById('valorTotal');
-    valorTotal.innerHTML = 'Importe total: $' + valorTotalDeCarrito;
-}
-
-// boton vaciar con Jquery
-$('#buttonVaciarCarrito').click(function(){
-    localStorage.clear();
-    alert('Por favor reinicia la pagina');
-});
-
-// boton comprar con Jquery
-$('#buttonComprar').click(function(){
-    alert('Compra aceptada! redirigiendo a la pasarela de pago');
-    localStorage.clear();
-});

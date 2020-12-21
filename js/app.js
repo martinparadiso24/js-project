@@ -34,16 +34,29 @@ function createProductCard(product) {
 
     let stockDiv = document.createElement('div');
     stockDiv.innerHTML = product.stock;
-    productCard.appendChild(stockDiv);
+    stockDiv.id = 'q-' + product.id;
     
+    stockCheck(product);
+    // Funcion que chequea si hay carrito de Local y resta la cantidad del stock
+    
+    productCard.appendChild(stockDiv);
+
+    // Defino funcion de chequeo
+    function stockCheck(producto){
+        if (localStorage.getItem("cart") != null) {
+            let cartFromLocal = JSON.parse(localStorage.getItem('cart'));
+            cartFromLocal.forEach(element => {
+                if (element.id == producto.id){
+                    stockDiv.innerHTML = producto.stock - element.quantity;
+                }
+            });
+        }
+    };
 
     let cantidadP = document.createElement('div');
     cantidadP.innerHTML = 'Unidades disponibles';
     productCard.appendChild(cantidadP);
     
-
-    
-
     // Form Div
     let quantDiv = document.createElement('div');
 

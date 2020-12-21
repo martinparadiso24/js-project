@@ -12,3 +12,7 @@ header {
 .cartContainer {
   display: none;
 }
+
+.buyoutContainer {
+  display: none;
+}
